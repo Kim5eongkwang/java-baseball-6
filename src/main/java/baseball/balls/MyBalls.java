@@ -1,4 +1,4 @@
-package baseball.ball;
+package baseball.balls;
 
 import static camp.nextstep.edu.missionutils.Console.readLine;
 
@@ -9,11 +9,7 @@ public class MyBalls implements Balls {
     private List<Integer> myBalls = new ArrayList<>();
     @Override
     public void init() {
-        try {
-            inputMyBall();
-        } catch (IllegalArgumentException e){
-            //IllegalArgumentException
-        }
+        inputMyBall();
     }
 
     private void inputMyBall(){
