@@ -1,4 +1,4 @@
-package baseball.ball;
+package baseball.balls;
 
 public interface Balls {
     public void init();
