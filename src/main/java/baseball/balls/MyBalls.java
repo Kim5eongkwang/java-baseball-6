@@ -7,12 +7,13 @@ import java.util.List;
 
 public class MyBalls implements Balls {
     private List<Integer> myBalls = new ArrayList<>();
+
     @Override
     public void init() {
         inputMyBall();
     }
 
-    private void inputMyBall(){
+    private void inputMyBall() {
         String inputStr = readLine();
         try {
             int inputInt = Integer.parseInt(inputStr); // 문자열을 정수로 변환
@@ -31,8 +32,8 @@ public class MyBalls implements Balls {
 
     }
 
-    private void copyInput(String input){
-        for(int i = 0; i < 3; i++){
+    private void copyInput(String input) {
+        for (int i = 0; i < 3; i++) {
             char tmp = input.charAt(i);
             myBalls.add(tmp - '0');
         }
