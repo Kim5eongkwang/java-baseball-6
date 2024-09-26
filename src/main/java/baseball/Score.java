@@ -1,6 +1,8 @@
 package baseball;
 
 public enum Score {
-    ThreeStrike, oneBallTwoStrike, TwoBallOneStrike,
-    ThreeBall, Nothing
+    ThreeStrike,
+    TwoStrike, OneBallTwoStrike,
+    OneStrike, OneBallOneStrike, TwoBallOneStrike,
+    ThreeBall, TwoBall, OneBall, Nothing
 }
