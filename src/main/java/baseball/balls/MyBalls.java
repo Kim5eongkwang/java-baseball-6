@@ -10,6 +10,7 @@ public class MyBalls implements Balls {
 
     @Override
     public void init() {
+        myBalls.clear();
         inputMyBall();
     }
 
