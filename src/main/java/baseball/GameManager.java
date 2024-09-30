@@ -57,6 +57,7 @@ public class GameManager {
     }
 
     private void gameEnd() {
+        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
         System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
         if (isRetry()) {
             startGame();
@@ -144,7 +145,8 @@ public class GameManager {
         int my = 0, rival = 0;
 
         my += (1 << myBalls.getFirstBall()) + (1 << myBalls.getSecondBall()) + (1 << myBalls.getThirdBall());
-        rival += (1 << rivalBalls.getFirstBall()) + (1 << rivalBalls.getSecondBall()) + (1 << rivalBalls.getThirdBall());
+        rival +=
+                (1 << rivalBalls.getFirstBall()) + (1 << rivalBalls.getSecondBall()) + (1 << rivalBalls.getThirdBall());
 
         my = my & rival;
 
@@ -152,11 +154,11 @@ public class GameManager {
     }
 
     private void printStartMsg() {
-        System.out.println("숫자 야구 게임을 시작합니다.");
+        System.out.print("숫자 야구 게임을 시작합니다.");
     }
 
     private void printInputMsg() {
-        System.out.println("숫자를 입력해주세요 : ");
+        System.out.print("숫자를 입력해주세요 : ");
     }
 
 
