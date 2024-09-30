@@ -23,34 +23,35 @@ public class GameManager {
     }
 
     private void showScore() {
-        if (marking() == Score.ThreeStrike) {
+        Score myScore = marking();
+        if (myScore == Score.ThreeStrike) {
             System.out.println("3스트라이크");
         }
-        if (marking() == Score.TwoStrike) {
+        if (myScore == Score.TwoStrike) {
             System.out.println("2스트라이크");
         }
-        if (marking() == Score.OneBallTwoStrike) {
+        if (myScore == Score.OneBallTwoStrike) {
             System.out.println("1볼 2스트라이크");
         }
-        if (marking() == Score.TwoBallOneStrike) {
+        if (myScore == Score.TwoBallOneStrike) {
             System.out.println("2볼 1스트라이크");
         }
-        if (marking() == Score.OneBallOneStrike) {
+        if (myScore == Score.OneBallOneStrike) {
             System.out.println("1볼 1스트라이크");
         }
-        if (marking() == Score.OneStrike) {
+        if (myScore == Score.OneStrike) {
             System.out.println("1스트라이크");
         }
-        if (marking() == Score.OneBall) {
+        if (myScore == Score.OneBall) {
             System.out.println("1볼");
         }
-        if (marking() == Score.TwoBall) {
+        if (myScore == Score.TwoBall) {
             System.out.println("2볼");
         }
-        if (marking() == Score.ThreeBall) {
+        if (myScore == Score.ThreeBall) {
             System.out.println("3볼");
         }
-        if (marking() == Score.Nothing) {
+        if (myScore == Score.Nothing) {
             System.out.println("낫싱");
         }
     }
