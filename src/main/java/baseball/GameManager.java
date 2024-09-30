@@ -5,7 +5,6 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 import baseball.balls.CPURival;
 import baseball.balls.Balls;
 import baseball.balls.MyBalls;
-import java.util.Objects;
 
 public class GameManager {
 
@@ -14,16 +13,49 @@ public class GameManager {
 
     public void startGame() {
         printStartMsg();
-        inputSequence();
+        rivalBalls.init();
 
-        while (marking() != Score.ThreeStrike) {
+        do {
             inputSequence();
-        }
+            showScore();
+        } while (marking() != Score.ThreeStrike);
         gameEnd();
     }
 
+    private void showScore() {
+        if (marking() == Score.ThreeStrike) {
+            System.out.println("3스트라이크");
+        }
+        if (marking() == Score.TwoStrike) {
+            System.out.println("2스트라이크");
+        }
+        if (marking() == Score.OneBallTwoStrike) {
+            System.out.println("1볼 2스트라이크");
+        }
+        if (marking() == Score.TwoBallOneStrike) {
+            System.out.println("2볼 1스트라이크");
+        }
+        if (marking() == Score.OneBallOneStrike) {
+            System.out.println("1볼 1스트라이크");
+        }
+        if (marking() == Score.OneStrike) {
+            System.out.println("1스트라이크");
+        }
+        if (marking() == Score.OneBall) {
+            System.out.println("1볼");
+        }
+        if (marking() == Score.TwoBall) {
+            System.out.println("2볼");
+        }
+        if (marking() == Score.ThreeBall) {
+            System.out.println("3볼");
+        }
+        if (marking() == Score.Nothing) {
+            System.out.println("낫싱");
+        }
+    }
+
     private void gameEnd() {
-        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
         System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
         if (isRetry()) {
             startGame();
@@ -37,7 +69,7 @@ public class GameManager {
             int inputInt = Integer.parseInt(inputStr); // 문자열을 정수로 변환
 
             // 범위 확인
-            if (inputInt == 1 || inputInt == 2) {
+            if (!(inputInt == 1 || inputInt == 2)) {
                 throw new IllegalArgumentException("Input must be between 1 and 2.");
             }
 
@@ -53,7 +85,6 @@ public class GameManager {
 
     private void inputSequence() {
         printInputMsg();
-        rivalBalls.init();
         myBalls.init();
     }
 
@@ -61,31 +92,46 @@ public class GameManager {
         int strikeCnt = getStrikeCnt();
         int ballCnt = getBallCnt();
 
-        if (strikeCnt == 3) {
+        if (strikeCnt == 3 && ballCnt == 0) {
             return Score.ThreeStrike;
         }
-
-        if (strikeCnt == 2 && ballCnt == 1) {
-            return Score.oneBallTwoStrike;
+        if (strikeCnt == 2 && ballCnt == 0) {
+            return Score.TwoStrike;
         }
-
+        if (strikeCnt == 2 && ballCnt == 1) {
+            return Score.OneBallTwoStrike;
+        }
         if (strikeCnt == 1 && ballCnt == 2) {
             return Score.TwoBallOneStrike;
         }
-
+        if (strikeCnt == 1 && ballCnt == 1) {
+            return Score.OneBallOneStrike;
+        }
+        if (strikeCnt == 1 && ballCnt == 0) {
+            return Score.OneStrike;
+        }
+        if (strikeCnt == 0 && ballCnt == 1) {
+            return Score.OneBall;
+        }
+        if (strikeCnt == 0 && ballCnt == 2) {
+            return Score.TwoBall;
+        }
+        if (strikeCnt == 0 && ballCnt == 3) {
+            return Score.ThreeBall;
+        }
         return Score.Nothing;
     }
 
     private int getStrikeCnt() {
         int strikeCnt = 0;
 
-        if (Objects.equals(myBalls.getFirstBall(), rivalBalls.getFirstBall())) {
+        if (myBalls.getFirstBall() == rivalBalls.getFirstBall()) {
             strikeCnt++;
         }
-        if (Objects.equals(myBalls.getSecondBall(), rivalBalls.getSecondBall())) {
+        if (myBalls.getSecondBall() == rivalBalls.getSecondBall()) {
             strikeCnt++;
         }
-        if (Objects.equals(myBalls.getThirdBall(), rivalBalls.getThirdBall())) {
+        if (myBalls.getThirdBall() == rivalBalls.getThirdBall()) {
             strikeCnt++;
         }
 
@@ -94,14 +140,14 @@ public class GameManager {
 
     private int getBallCnt() {
         int strikeCnt = getStrikeCnt();
-        int ballCnt;
-        int compareBall = myBalls.getFirstBall() & rivalBalls.getFirstBall()
-                + myBalls.getSecondBall() & rivalBalls.getSecondBall()
-                + myBalls.getThirdBall() & rivalBalls.getThirdBall();
+        int my = 0, rival = 0;
 
-        ballCnt = Integer.bitCount(compareBall) - strikeCnt;
+        my += (1 << myBalls.getFirstBall()) + (1 << myBalls.getSecondBall()) + (1 << myBalls.getThirdBall());
+        rival += (1 << rivalBalls.getFirstBall()) + (1 << rivalBalls.getSecondBall()) + (1 << rivalBalls.getThirdBall());
 
-        return ballCnt;
+        my = my & rival;
+
+        return Integer.bitCount(my) - strikeCnt;
     }
 
     private void printStartMsg() {
